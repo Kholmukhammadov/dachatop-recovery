@@ -1,0 +1,9 @@
+{
+  "type": "mysql",
+  "host": "159.65.123.217",
+  "port": 3306,
+  "username": "remote4",
+  "password": "#Qam1binKam2",
+  "database": "dachatop",
+  "entities": ["dist/**/*.entity{.ts,.js}"]
+}
