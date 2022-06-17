@@ -15,7 +15,7 @@ import { HttpModule } from '@nestjs/axios';
     JwtModule.register({
       secret: 'topSecret51',
       signOptions: {
-        expiresIn: 43200,
+        expiresIn: 259200,
       },
     }),
     TypeOrmModule.forFeature([UsersRepository, UsermetaRepository]),
