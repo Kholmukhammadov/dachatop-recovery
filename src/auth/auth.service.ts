@@ -21,6 +21,7 @@ import { lastValueFrom, map } from 'rxjs';
 import { response } from 'express';
 import { Wp_usermeta } from './user-options/wp_usermeta.entity';
 
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -90,22 +91,43 @@ export class AuthService {
     const date = new Date(user.user_registered.toString())
       .toISOString()
       .slice(0, 10);
+    // const headersRequest1 = {
+    //   'Content-Type': 'application/json',
+    //   Authorization: 'Basic stays:J9VezmTeF876',
+    // };
     const responseData = await lastValueFrom(
       this.httpService
         .post(
-          'http://tiq.levelup.uz/send-sms.php',
+          'http://91.204.239.44/broker-api/send',
           {
-            number: number,
-            message: `${user.user_activation_key.slice(0, 6)}`,
-            p_id: user.ID,
+            messages: [
+              {
+                recipient: `${number}`,
+                'message-id': `dac${user.ID}`,
+
+                sms: {
+                  originator: '3700',
+                  content: {
+                    text: `Dachatop: ${user.user_activation_key.slice(0, 6)}`,
+                  },
+                },
+              },
+            ],
           },
           {
+            // headers: {
+            // Service: `np88eqptqoh1xydqrx85vmo2w76cz98n;${sha1(
+            //   'h49ixmjjwhrm0wa3f18gsf4gnupmks781c783hgli63vufce9v5yqtnydn86noed025ya1kle07yui29skm7r901hrdy6ag7xogwh4y0zkbr7m306f1ayx51fu54fyt2' +
+            //     date,
+            // )};${date}`,
+            // },
             headers: {
-              Service: `np88eqptqoh1xydqrx85vmo2w76cz98n;${sha1(
-                'h49ixmjjwhrm0wa3f18gsf4gnupmks781c783hgli63vufce9v5yqtnydn86noed025ya1kle07yui29skm7r901hrdy6ag7xogwh4y0zkbr7m306f1ayx51fu54fyt2' +
-                  date,
-              )};${date}`,
+              'Content-Type': 'application/json',
             },
+            auth: {
+              username: 'stays',
+              password: 'J9VezmTeF876',
+            }
           },
         )
         .pipe(
