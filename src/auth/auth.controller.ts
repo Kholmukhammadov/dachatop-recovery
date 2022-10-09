@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post, Put, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
 import {
   AuthCredentialsDtoSignIn,
   AuthCredentialsDtoSignUp,
@@ -41,5 +41,10 @@ export class AuthController {
   @Get(':id')
   async getCode(@Param('id') id: number): Promise<string> {
     return await this.authService.sendMessageAgain(id);
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') id: number): Promise<string> {
+    return `User with ${id} ID will be deleted soon`;
   }
 }
